@@ -1,0 +1,104 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/server-side-api/api-overview.html
+docs:
+  - https://docs.blink.net/docs/server-side-api/api-overview.html
+  - https://docs.blink.net/docs/server-side-api/get-auth-token.html
+  - https://docs.blink.net/docs/guides/login-with-blink.html
+  - https://docs.blink.net/docs/notifications/webHooks.html
+summary: >-
+  Blink runs three distinct authentication surfaces: a public clientId that
+  scopes the browser SDK to a merchant, a bearer login token plus OAuth2
+  authorization-code exchange for the server-side API, and a dual
+  token/ed25519-signature scheme for inbound webhooks. Client credentials are
+  issued by Blink on request (integration@blink.net) — there is no
+  self-service key provisioning.
+schemes:
+  - id: sdk_client_id
+    type: apiKey
+    in: query
+    name: clientId
+    surface: browser-sdk
+    location: https://blink.net/1.0/blink-sdk.js?clientId=YOUR_CLIENT_ID
+    secret: false
+    description: >-
+      Public merchant identifier passed as a query parameter when loading the
+      Blink SDK. Also surfaced as merchant.alias in webhook payloads. Not a
+      secret; identifies the publisher, does not authorize privileged calls.
+  - id: login_token
+    type: http
+    scheme: bearer
+    in: header
+    name: Authorization
+    surface: server-side-api
+    description: >-
+      Bearer token obtained by POSTing client-credential email/password to
+      /users/login/. Required by /oauth/applications/register/,
+      /oauth/applications/ and /oauth/access_token/.
+    obtain:
+      operation: getAuthToken
+      method: POST
+      path: /users/login/
+      request: {email, password}
+      response: {key}
+  - id: oauth2_authorization_code
+    type: oauth2
+    flow: authorization_code
+    surface: login-with-blink
+    description: >-
+      Login with Blink. The browser SDK's getAuthorizationCode() opens a Blink
+      login modal and returns an authorization code; the publisher's server
+      exchanges that code plus client_id/client_secret at
+      POST /oauth/access_token/ for the Blink user profile. grant_type accepts
+      only "authorization_code". No scope parameter is documented — Blink
+      publishes no scope registry, so no scopes/ artifact is emitted.
+    token_endpoint: /oauth/access_token/
+    registration_endpoint: /oauth/applications/register/
+    scopes_documented: false
+  - id: webhook_token
+    type: apiKey
+    in: header
+    name: Blink-Echo-Token
+    surface: webhooks
+    direction: inbound
+    description: >-
+      Optional shared secret chosen at webhook-registration time. Blink sends it
+      as the Blink-Echo-Token request header on every notification POST so the
+      receiver can verify origin.
+  - id: webhook_signature
+    type: signature
+    algorithm: ed25519
+    encoding: base16
+    surface: webhooks
+    direction: inbound
+    description: >-
+      Every notification is signed over the canonical form of the `event`
+      object (no whitespace, keys sorted lexicographically). The signature
+      block carries algorithm, encoding, publicKey and signature so receivers
+      that cannot store secrets can still verify authenticity.
+  - id: payment_info_signature
+    type: signature
+    algorithm: ed25519
+    encoding: base16
+    surface: browser-sdk
+    direction: outbound
+    description: >-
+      blinkSDK.requestPayment() accepts an optional merchantPublicKey and
+      paymentInfoSignature proving the payment info (amount, currencyIsoCode,
+      offerId, comment) was authorized by the merchant.
+provisioning:
+  self_service: false
+  contact: integration@blink.net
+  note: >-
+    Client credentials, test-environment clientIds and webhook registrations
+    are all issued by Blink on request. Webhook registration goes through
+    biz.support@blink.net.
+environments:
+  production:
+    api_base: https://api.blink.net
+  test:
+    api_base: https://api.test.blink.net
+related:
+  - errors/blink-ledger-systems-problem-types.yml
+  - conventions/blink-ledger-systems-conventions.yml
+  - openapi/blink-ledger-systems-server-side-api-openapi.yml

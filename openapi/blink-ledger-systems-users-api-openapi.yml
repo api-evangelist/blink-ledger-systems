@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Blink Server-Side Authentication Users API
+  version: '1.0'
+  description: Server-side web APIs a publisher integrates on the back end of their web application to support "Login with Blink" and OAuth2. Transcribed faithfully from the published Blink documentation at https://docs.blink.net/docs/server-side-api/api-overview.html — Blink does not publish a machine-readable specification of its own. Paths, methods, request bodies, response shapes and error codes are exactly as documented; nothing has been invented. Field descriptions that the docs leave implicit are omitted rather than guessed.
+  contact:
+    name: Blink Integration
+    email: integration@blink.net
+    url: https://docs.blink.net/
+  x-provenance:
+    generated: '2026-07-20'
+    method: generated
+    source: https://docs.blink.net/docs/server-side-api/api-overview.html
+servers:
+- url: https://api.blink.net
+  description: Production
+- url: https://api.test.blink.net
+  description: Test
+tags:
+- name: Users
+  description: Blink user profile exchange.
+paths:
+  /oauth/access_token/:
+    post:
+      operationId: getUserProfile
+      tags:
+      - Users
+      summary: Get the Blink user profile
+      description: Gets the Blink user profile, based on a valid authorization code that was previously obtained in a web application using Login with Blink.
+      security:
+      - loginToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessTokenRequest'
+      responses:
+        '200':
+          description: The Blink user profile.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+        default:
+          description: Error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    UserProfileResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: Blink user's email address.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
+    AccessTokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      - code
+      properties:
+        client_id:
+          type: string
+          description: OAuth client id.
+        client_secret:
+          type: string
+          description: OAuth client secret.
+        code:
+          type: string
+          description: Authorization code obtained client-side via blinkSDK.getAuthorizationCode().
+        grant_type:
+          type: string
+          description: Optional. Accepts only "authorization_code".
+          enum:
+          - authorization_code
+        redirect_uri:
+          type: string
+          description: Optional. One of your OAuth application's redirect URIs.
+  securitySchemes:
+    loginToken:
+      type: http
+      scheme: bearer
+      description: 'Bearer token obtained from POST /users/login/. Sent as `Authorization: Bearer <AUTH_TOKEN>`.'

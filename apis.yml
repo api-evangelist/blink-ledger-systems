@@ -1,27 +1,223 @@
 aid: blink-ledger-systems
 name: Blink Ledger Systems
-description: 'Blink Ledger Systems is a company surfaced as a portfolio company of polychain and added
-  to the API Evangelist network as a stub for enrichment. Sector: infrastructure. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  Blink (Blink Ledger Systems Inc.) builds online identity and payment
+  technologies for digital publishers. A single Blink account works across
+  publishers, giving readers one universal login and frictionless payment so
+  they can subscribe, donate, or buy an individual article or podcast with one
+  click, or enable autopay for small frequent purchases. Publishers integrate
+  three products — Blink Identity, Blink Pay and Blink Donate — through one
+  hosted JavaScript SDK that places Blink-managed panels into the page, a
+  dashboard-configured User Journeys rules engine, four server-side JSON
+  endpoints for OAuth2 login, and a signed webhook notification stream covering
+  subscription, payment and donation events. Founded 2017; incorporated in the
+  US in 2018 and surfaced in the API Evangelist network as a Polychain
+  portfolio company.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://blink.net/resources/favicon.png
 url: https://raw.githubusercontent.com/api-evangelist/blink-ledger-systems/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
-- polychain
-x-tier: stub
-x-tier-reason: portfolio-lead
+  - polychain
+x-tier: profiled
+x-tier-reason: enriched-from-public-docs
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
-- Company
-- Infrastructure
-apis: []
+  - Company
+  - Infrastructure
+  - Payments
+  - Identity
+  - Authentication
+  - OAuth
+  - Publishing
+  - Media
+  - Subscriptions
+  - Donations
+  - Micropayments
+  - Paywall
+  - Webhooks
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-- FN: APIs.json
-  email: info@apis.io
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+  - FN: APIs.json
+    email: info@apis.io
+apis:
+- aid: blink-ledger-systems-sdk
+  name: Blink SDK for JavaScript
+  description: >-
+    Browser SDK exposing window.blinkSDK. Provides Login with Blink (getAuthorizationCode), subscription
+    entitlement checks (isSubscribed, getSubscription, onSubscriptionChange), single-article charging
+    (requestPayment), hosted donation and subscription modals, and the variables/functions extension points
+    that dashboard-configured User Journeys evaluate against.
+  humanURL: https://docs.blink.net/docs/api-reference/load-blink-sdk.html
+  baseURL: https://blink.net/1.0
+  tags:
+  - Payments
+  - Identity
+  - Subscriptions
+  - Donations
+  properties:
+  - type: Documentation
+    url: https://docs.blink.net/docs/api-reference/load-blink-sdk.html
+  - type: APIReference
+    url: https://docs.blink.net/docs/api-reference/functions.html
+  - type: SDKs
+    url: packages/blink-ledger-systems-packages.yml
+  - type: Components
+    url: components/blink-ledger-systems-components.yml
+- aid: blink-ledger-systems-notifications
+  name: Blink Notifications (Webhooks)
+  description: >-
+    Outbound webhook stream delivering signed JSON notifications for subscription, payment and donation
+    lifecycle events. Every payload is signed with ed25519 over the canonicalized event object, with an
+    optional Blink-Echo-Token shared-secret header.
+  humanURL: https://docs.blink.net/docs/notifications/webHooks.html
+  baseURL: https://api.blink.net
+  tags:
+  - Webhooks
+  - Events
+  - Payments
+  properties:
+  - type: Webhooks
+    url: asyncapi/blink-ledger-systems-notifications-webhooks.yml
+  - type: Documentation
+    url: https://docs.blink.net/docs/notifications/webHooks.html
+- aid: blink-ledger-systems:blink-ledger-systems-authentication-api
+  name: Blink Ledger Systems Authentication API
+  description: Client account login and bearer token issuance.
+  humanURL: https://docs.blink.net/docs/server-side-api/api-overview.html
+  baseURL: https://api.blink.net
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/blink-ledger-systems-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blink.net/docs/server-side-api/api-overview.html
+  - type: APIReference
+    url: https://docs.blink.net/docs/server-side-api/api-overview.html
+  - type: Authentication
+    url: authentication/blink-ledger-systems-authentication.yml
+  - type: ErrorCatalog
+    url: errors/blink-ledger-systems-problem-types.yml
+- aid: blink-ledger-systems:blink-ledger-systems-oauth-applications-api
+  name: Blink Ledger Systems OAuth Applications API
+  description: Registration and retrieval of OAuth application credentials.
+  humanURL: https://docs.blink.net/docs/server-side-api/api-overview.html
+  baseURL: https://api.blink.net
+  tags:
+  - OAuth Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/blink-ledger-systems-oauth-applications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blink.net/docs/server-side-api/api-overview.html
+  - type: APIReference
+    url: https://docs.blink.net/docs/server-side-api/api-overview.html
+  - type: Authentication
+    url: authentication/blink-ledger-systems-authentication.yml
+  - type: ErrorCatalog
+    url: errors/blink-ledger-systems-problem-types.yml
+- aid: blink-ledger-systems:blink-ledger-systems-users-api
+  name: Blink Ledger Systems Users API
+  description: Blink user profile exchange.
+  humanURL: https://docs.blink.net/docs/server-side-api/api-overview.html
+  baseURL: https://api.blink.net
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/blink-ledger-systems-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blink.net/docs/server-side-api/api-overview.html
+  - type: APIReference
+    url: https://docs.blink.net/docs/server-side-api/api-overview.html
+  - type: Authentication
+    url: authentication/blink-ledger-systems-authentication.yml
+  - type: ErrorCatalog
+    url: errors/blink-ledger-systems-problem-types.yml
 common:
-- type: Website
-  url: https://blink.net
+  - type: Website
+    url: https://blink.net
+  - type: DeveloperPortal
+    url: https://docs.blink.net/
+  - type: Documentation
+    url: https://docs.blink.net/docs/getting-started/overview.html
+  - type: APIReference
+    url: https://docs.blink.net/docs/api-reference/functions.html
+  - type: GettingStarted
+    url: https://docs.blink.net/docs/getting-started/quick-start.html
+  - type: Support
+    url: https://docs.blink.net/docs/getting-started/support.html
+  - type: SignUp
+    url: https://blink.net/login
+  - type: TermsOfService
+    url: https://blink.net/terms
+  - type: PrivacyPolicy
+    url: https://blink.net/privacy-policy
+  - type: StatusPage
+    url: https://status.blink.net
+  - type: OpenAPI
+    url: openapi/blink-ledger-systems-server-side-api-openapi.yml
+  - type: Overlay
+    url: overlays/blink-ledger-systems-server-side-api-overlay.yaml
+  - type: Packages
+    url: packages/blink-ledger-systems-packages.yml
+  - type: SDKs
+    url: packages/blink-ledger-systems-packages.yml
+  - type: Authentication
+    url: authentication/blink-ledger-systems-authentication.yml
+  - type: ErrorCatalog
+    url: errors/blink-ledger-systems-problem-types.yml
+  - type: Conventions
+    url: conventions/blink-ledger-systems-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/blink-ledger-systems-lifecycle.yml
+  - type: Sandbox
+    url: sandbox/blink-ledger-systems-sandbox.yml
+  - type: Components
+    url: components/blink-ledger-systems-components.yml
+  - type: DataModel
+    url: data-model/blink-ledger-systems-data-model.yml
+  - type: Webhooks
+    url: asyncapi/blink-ledger-systems-notifications-webhooks.yml
+  - type: Conformance
+    url: conformance/blink-ledger-systems-conformance.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/blink-ledger-systems-llms.txt
+  - type: DomainSecurity
+    url: security/blink-ledger-systems-domain-security.yml
+x-not-published:
+  notes: >-
+    Probed and confirmed absent, recorded so later runs do not re-search: no
+    /.well-known/ documents on any host (all soft-404 — see
+    well-known/blink-ledger-systems-well-known.yml), no llms.txt, no
+    robots.txt, no AsyncAPI document, no public GitHub organization, no MCP
+    server (a candidate tool list is derived in mcp/), no CLI, no changelog or
+    release notes, no roadmap, no pricing page, no blog, no Postman
+    collection, no published rate limits, no OAuth scope registry, no
+    security.txt or vulnerability disclosure program, no trust center or named
+    certifications, and no decline-code reference. Deliberately no Idempotency,
+    Deprecation, Security, Compliance, MCPServer or WellKnown pointer is wired,
+    because Blink publishes none of those things.
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v1

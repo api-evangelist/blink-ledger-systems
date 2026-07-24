@@ -1,0 +1,50 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/blink-ledger-systems-server-side-api-openapi.yml
+notes: >-
+  Blink publishes no hosted or remote MCP server. Searches of the docs, the
+  docs sitemap, npm (@modelcontextprotocol and blink namespaces) and the public
+  MCP registries returned nothing first-party, and there is no public GitHub
+  organization. The tool list below is a CANDIDATE derived from Blink's
+  documented server-side operations — it describes what an MCP server over
+  Blink could expose, and no MCPServer pointer is wired in apis.yml because no
+  server exists.
+server:
+  name: blink
+  status: not_published
+  transport: null
+  url: null
+tools:
+  - name: get_auth_token
+    description: Authenticate the client account and obtain a bearer login token.
+    source_operation: openapi/blink-ledger-systems-server-side-api-openapi.yml#getAuthToken
+    action_class: write
+    consequence: low
+    note: Handles client credentials; should be brokered, never exposed to an agent directly.
+  - name: register_oauth_application
+    description: Register a new OAuth application on the client account and receive its clientId/clientSecret.
+    source_operation: openapi/blink-ledger-systems-server-side-api-openapi.yml#registerOAuthApplication
+    action_class: write
+    consequence: high
+    note: Returns a long-lived secret and is limited to one application per account (error 1908). Human approval warranted.
+  - name: list_oauth_applications
+    description: List the OAuth applications registered to the client account.
+    source_operation: openapi/blink-ledger-systems-server-side-api-openapi.yml#getOAuthApplications
+    action_class: read
+    consequence: high
+    note: Response includes clientSecret in plaintext.
+  - name: get_user_profile
+    description: Exchange a Login-with-Blink authorization code for the Blink user's profile.
+    source_operation: openapi/blink-ledger-systems-server-side-api-openapi.yml#getUserProfile
+    action_class: read
+    consequence: medium
+    note: Returns end-user PII (email).
+not_derivable:
+  - >-
+    The browser SDK surface (blinkSDK.requestPayment, promptDonationPopup,
+    getSubscription, User Journeys) is client-side and interactive by design;
+    it has no server-callable equivalent and cannot be expressed as MCP tools.
+  - >-
+    Webhook events are inbound to the publisher, not callable operations. See
+    asyncapi/blink-ledger-systems-notifications-webhooks.yml.

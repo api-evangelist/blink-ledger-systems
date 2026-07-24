@@ -1,0 +1,102 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/server-side-api/api-overview.html
+docs:
+  - https://docs.blink.net/docs/server-side-api/api-overview.html
+  - https://docs.blink.net/docs/notifications/webHooks.html
+  - https://docs.blink.net/docs/getting-started/environments.html
+summary: >-
+  Blink's public surface is deliberately small: a browser SDK for the client
+  side and four server-side JSON endpoints for identity. The conventions below
+  are what Blink actually documents; every area Blink is silent about is listed
+  explicitly under not_documented rather than guessed at.
+auth:
+  style: bearer_token_plus_oauth2
+  detail: >-
+    Bearer login token from POST /users/login/ for privileged server-side
+    calls; OAuth2 authorization-code exchange for user identity; a public
+    clientId query parameter scopes the browser SDK.
+  see: authentication/blink-ledger-systems-authentication.yml
+required_headers:
+  - name: Content-Type
+    value: application/json; charset=utf-8
+    scope: all server-side API requests
+  - name: x-requested-with
+    value: XMLHttpRequest
+    scope: all server-side API requests
+  - name: Authorization
+    value: Bearer <AUTH_TOKEN>
+    scope: endpoints requiring a login token
+url_style:
+  base_production: https://api.blink.net
+  base_test: https://api.test.blink.net
+  trailing_slash: required
+  note: >-
+    Every documented path carries a trailing slash (/users/login/,
+    /oauth/applications/, /oauth/applications/register/,
+    /oauth/access_token/). Requests are POST-with-JSON-body even where the
+    operation reads rather than writes (getUserProfile is a POST).
+error_envelope:
+  shape: '{"code": <int>, "message": <string>}'
+  gateway_shape: '{"error": {"code": <int>, "message": <string>, "fields": []}}'
+  rfc9457: false
+  status_semantics: >-
+    Errors observed on api.blink.net are returned with HTTP 200 and an error
+    body. Clients must branch on the body, not the status code.
+  see: errors/blink-ledger-systems-problem-types.yml
+money:
+  currency_code: ISO 4217, lowercase in webhook payloads (usd/gbp/eur)
+  representation: >-
+    Amounts are carried four ways in the same object so integrators never have
+    to guess precision: `amount` (string, currency units), `amountInSubunits`
+    (integer minor units), `amountPrecise` (integer) and `amountPreciseExponent`
+    (power of 10 used for amountPrecise, 6 in all published examples).
+  sdk_note: >-
+    blinkSDK.requestPayment() takes `amount` in precise units where
+    1 USD = 1 000 000 (so 600000 = 60 cents).
+  fees: >-
+    The amount object includes the Blink fee and the payment processor fees.
+timestamps:
+  format: ISO 8601 with microsecond precision and Z offset
+  example: '2020-11-25T12:35:42.263635Z'
+identifiers:
+  style: opaque numeric strings
+  note: >-
+    User, subscription, donation and payment ids are large numeric values
+    carried as JSON strings (e.g. "360262023772113421"). No type prefixes are
+    used. Merchant carries both a numeric `id` and an `alias`, where the alias
+    is the same clientId used to load the SDK.
+webhooks:
+  see: asyncapi/blink-ledger-systems-notifications-webhooks.yml
+  verification: ed25519 signature over canonicalized `event` object, plus optional Blink-Echo-Token header
+  canonicalization: no whitespace, object keys sorted lexicographically
+  retry: non-200 or >10s timeout is retried a few times over the following hours
+  receiver_guidance: >-
+    Because Blink retries on timeout and does not publish a delivery-id or
+    dedup key, receivers should treat handlers as idempotent themselves —
+    key off the event resource id (subscription.id / payment.id / donation.id)
+    plus event.type.
+versioning:
+  scheme: path segment on the SDK bundle
+  current: '1.0'
+  evidence: https://blink.net/1.0/blink-sdk.js
+  api_versioning: >-
+    The server-side API carries no version segment, header or parameter in any
+    documented path.
+  see: lifecycle/blink-ledger-systems-lifecycle.yml
+not_documented:
+  idempotency: >-
+    Blink documents no idempotency key, header, or retry-safety contract for
+    any write operation. No Idempotency pointer is wired in apis.yml.
+  pagination: >-
+    No paged collection is documented. GET /oauth/applications/ returns a bare
+    JSON array with no cursor, limit or offset parameters.
+  rate_limiting: No rate limits, quotas or rate-limit response headers are published.
+  request_id_tracing: No correlation or request-id header is documented.
+  field_expansion: No expand/fields/sparse-fieldset parameters are documented.
+  metadata: No customer-defined metadata field is documented on any object.
+related:
+  - authentication/blink-ledger-systems-authentication.yml
+  - errors/blink-ledger-systems-problem-types.yml
+  - lifecycle/blink-ledger-systems-lifecycle.yml
+  - data-model/blink-ledger-systems-data-model.yml

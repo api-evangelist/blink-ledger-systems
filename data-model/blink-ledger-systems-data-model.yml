@@ -1,0 +1,147 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/notifications/
+docs:
+  - https://docs.blink.net/docs/notifications/event.html
+  - https://docs.blink.net/docs/notifications/subscription.html
+  - https://docs.blink.net/docs/notifications/payment.html
+  - https://docs.blink.net/docs/notifications/donation.html
+  - https://docs.blink.net/docs/api-reference/getSubscription.html
+summary: >-
+  Blink's object graph is documented across the notifications reference and the
+  SDK's getSubscription() return shape. A Merchant (publisher) and a User meet
+  through one of three commercial objects — Subscription, Donation or Payment —
+  each of which carries an Amount. Subscriptions additionally carry Coverage,
+  Discount and Address value objects.
+id_style:
+  format: opaque numeric string
+  example: '360262023772113421'
+  prefixes: none
+entities:
+  - name: Event
+    description: Webhook notification envelope; wraps a type, a timestamp, and the objects the event concerns.
+    fields:
+      - {name: type, type: string, required: true}
+      - {name: timestamp, type: string, required: true}
+    relationships:
+      - {kind: has_one, target: User, via: user}
+      - {kind: has_one, target: Merchant, via: merchant}
+      - {kind: has_one, target: Subscription, via: subscription, conditional: subscription_* events}
+      - {kind: has_one, target: Payment, via: payment, conditional: payment_* events}
+      - {kind: has_one, target: Donation, via: donation, conditional: donation_created}
+  - name: Merchant
+    description: The publisher integrating Blink.
+    fields:
+      - {name: id, type: string, required: true}
+      - {name: alias, type: string, required: true, note: same value as the SDK clientId}
+    relationships:
+      - {kind: has_many, target: Subscription}
+      - {kind: has_many, target: Donation}
+      - {kind: has_many, target: Payment}
+      - {kind: has_many, target: OAuthApplication}
+  - name: User
+    description: A Blink account holder — the reader.
+    fields:
+      - {name: id, type: string, required: true}
+      - {name: email, type: string, required: true}
+      - {name: firstName, type: string, required: true, nullable: true}
+      - {name: lastName, type: string, required: true, nullable: true}
+      - {name: createdAt, type: iso-date-string, required: true}
+    relationships:
+      - {kind: has_many, target: Subscription, via: userId}
+      - {kind: has_many, target: Donation}
+      - {kind: has_many, target: Payment}
+  - name: Subscription
+    description: A recurring paid relationship between a User and a Merchant.
+    fields:
+      - {name: id, type: string, required: true}
+      - {name: status, type: string, required: true, enum: [active, canceled, finished, unpaid]}
+      - {name: createdAt, type: iso-date-string, required: true}
+      - {name: paidUntil, type: iso-date-string, required: true}
+      - {name: cycleDuration, type: string, required: true, note: "amount(if >1) + day/week/month/year, e.g. week, 2year, 7day"}
+      - {name: userId, type: string, source: getSubscription()}
+      - {name: offerId, type: string, source: getSubscription()}
+      - {name: deliveryAddressId, type: string, nullable: true, source: getSubscription()}
+      - {name: blinkSignature, type: hex-string, nullable: true, source: getSubscription(), note: Blink's proof that the user is subscribed}
+      - {name: nextPaymentAttempt, type: iso-date-string, source: getSubscription()}
+      - {name: canceledAt, type: iso-date-string, nullable: true, source: getSubscription()}
+    relationships:
+      - {kind: belongs_to, target: User, via: userId}
+      - {kind: belongs_to, target: Merchant}
+      - {kind: has_one, target: Amount, via: amount}
+      - {kind: has_one, target: Coverage, via: coverage}
+      - {kind: has_one, target: Discount, via: discount, nullable: true}
+      - {kind: has_one, target: Address, via: deliveryAddress, nullable: true}
+      - {kind: has_many, target: Payment, via: resource_id, note: "Payment.resource_type == subscription"}
+  - name: Donation
+    description: A one-time or recurring reader contribution to a Merchant.
+    fields:
+      - {name: id, type: string, required: true}
+      - {name: status, type: string, required: true, enum: [active, canceled, finished, unpaid]}
+      - {name: createdAt, type: string, required: true}
+      - {name: frequency, type: string, required: true, enum: [one_time, day, month, year]}
+    relationships:
+      - {kind: belongs_to, target: User}
+      - {kind: belongs_to, target: Merchant}
+      - {kind: has_one, target: Amount, via: amount, nullable: true}
+      - {kind: has_many, target: Payment, via: resource_id, note: "Payment.resource_type == donation"}
+  - name: Payment
+    description: A settled or reverted money movement backing a subscription, donation or article purchase.
+    fields:
+      - {name: id, type: string, required: true}
+      - {name: status, type: string, required: true, enum: [succeeded, reverted]}
+      - {name: createdAt, type: string, required: true}
+      - {name: resource_id, type: string, required: true}
+      - {name: resource_type, type: string, required: true, enum: [subscription, donation], note: "the value 'purchase' also appears in the published payment example"}
+    relationships:
+      - {kind: belongs_to, target: User}
+      - {kind: belongs_to, target: Merchant}
+      - {kind: has_one, target: Amount, via: amount, nullable: true}
+      - {kind: belongs_to, target: Subscription, via: resource_id, conditional: "resource_type == subscription"}
+      - {kind: belongs_to, target: Donation, via: resource_id, conditional: "resource_type == donation"}
+  - name: Amount
+    kind: value_object
+    description: Money, carried at four precisions in one object, inclusive of Blink and processor fees.
+    fields:
+      - {name: currency, type: string, required: true, note: ISO 4217, lowercase}
+      - {name: amount, type: string, required: true}
+      - {name: amountInSubunits, type: number, required: true}
+      - {name: amountPrecise, type: number, required: true}
+      - {name: amountPreciseExponent, type: number, required: true}
+  - name: Coverage
+    kind: value_object
+    description: What a subscription entitles the reader to.
+    fields:
+      - {name: name, type: string, required: true}
+      - {name: blinkCoverage, type: string, required: true, note: "comma-separated keywords; * means everything"}
+      - {name: extraCoverage, type: string, required: true, nullable: true}
+  - name: Discount
+    kind: value_object
+    fields:
+      - {name: code, type: string, required: true}
+      - {name: name, type: string, required: true}
+      - {name: value, type: string, required: true}
+  - name: Address
+    kind: value_object
+    description: Delivery address for the print edition of a subscription.
+    fields:
+      - {name: address1, type: string, required: true}
+      - {name: address2, type: string, required: true, nullable: true}
+      - {name: city, type: string, required: true}
+      - {name: state, type: string, required: true}
+      - {name: postalCode, type: string, required: true, nullable: true}
+      - {name: country, type: string, required: true}
+      - {name: countryCode, type: string, required: true}
+      - {name: name, type: string, required: true, nullable: true}
+  - name: OAuthApplication
+    description: A publisher's registered OAuth client, from the server-side API.
+    source: openapi/blink-ledger-systems-server-side-api-openapi.yml
+    fields:
+      - {name: clientId, type: string}
+      - {name: clientSecret, type: string}
+      - {name: redirectUris, type: string, note: space-separated list}
+    relationships:
+      - {kind: belongs_to, target: Merchant}
+related:
+  - asyncapi/blink-ledger-systems-notifications-webhooks.yml
+  - openapi/blink-ledger-systems-server-side-api-openapi.yml

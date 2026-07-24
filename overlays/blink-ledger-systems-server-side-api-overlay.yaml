@@ -1,0 +1,85 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Blink Server-Side API
+  version: 1.0.0
+  description: >-
+    Enhancements layered over
+    openapi/blink-ledger-systems-server-side-api-openapi.yml. Captures the
+    cross-cutting semantics Blink documents in prose but that do not appear in
+    the operation definitions themselves: the mandatory x-requested-with
+    header, the non-standard HTTP-200-with-error-body behaviour, agentic access
+    classification, and links out to the repo's conventions, errors and
+    authentication artifacts. The original specification is never mutated.
+x-provenance:
+  generated: '2026-07-20'
+  method: generated
+  source: openapi/blink-ledger-systems-server-side-api-openapi.yml
+  extends: openapi/blink-ledger-systems-server-side-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-error-envelope: '{"code": <int>, "message": <string>}'
+      x-error-status-semantics: >-
+        Errors are returned with HTTP 200 and an error body on the observed
+        gateway. Clients must branch on the response body, not the status code.
+      x-error-catalog: errors/blink-ledger-systems-problem-types.yml
+      x-conventions: conventions/blink-ledger-systems-conventions.yml
+      x-authentication: authentication/blink-ledger-systems-authentication.yml
+      x-data-model: data-model/blink-ledger-systems-data-model.yml
+      x-idempotency: >-
+        Not supported. Blink documents no idempotency key or retry-safety
+        contract for any write operation.
+      x-rate-limits: not_published
+      x-pagination: not_published
+  - target: $.paths.*.*
+    update:
+      x-required-headers:
+        Content-Type: application/json; charset=utf-8
+        x-requested-with: XMLHttpRequest
+  - target: $.paths['/users/login/'].post
+    update:
+      x-agentic-access:
+        action-class: write
+        consequence: low
+        escalation: broker
+        note: >-
+          Consumes long-lived client credentials. A broker should hold the
+          credentials and hand the agent only the resulting short-lived token.
+      x-error-codes: [1500, 1509]
+  - target: $.paths['/oauth/applications/register/'].post
+    update:
+      x-agentic-access:
+        action-class: write
+        consequence: high
+        escalation: human-approval
+        note: >-
+          Creates a durable OAuth client and returns a plaintext clientSecret.
+          Only one application may exist per account (error 1908), so this call
+          is effectively single-shot and not safely retryable.
+      x-error-codes: [1903, 1905, 1906, 1908]
+  - target: $.paths['/oauth/applications/'].get
+    update:
+      x-agentic-access:
+        action-class: read
+        consequence: high
+        escalation: human-approval
+        note: Response body contains clientSecret in plaintext; treat output as a secret.
+  - target: $.paths['/oauth/access_token/'].post
+    update:
+      x-agentic-access:
+        action-class: read
+        consequence: medium
+        escalation: none
+        note: >-
+          Returns end-user PII (email). The authorization code is single-use;
+          error 1902 indicates it is unknown, consumed or expired.
+      x-error-codes: [1901, 1902, 1904]
+      x-code-lifetime: single-use
+  - target: $.components.schemas.OAuthApplicationConfig
+    update:
+      x-sensitive-fields:
+        - clientSecret
+  - target: $.components.schemas.LoginToken
+    update:
+      x-sensitive-fields:
+        - key

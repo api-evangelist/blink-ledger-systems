@@ -1,0 +1,93 @@
+generated: '2026-07-20'
+method: searched
+source: live HTTP probes of the Blink hosts
+notes: >-
+  No /.well-known/ discovery document is published on any Blink host. Every
+  probed path returns HTTP 200 but with catch-all content, not the requested
+  document: blink.net and dashboard.blink.net return the single-page-app HTML
+  shell, docs.blink.net returns the Docusaurus shell, and api.blink.net returns
+  its JSON error envelope {"error":{"code":1006,"message":"Object not
+  found"}}. These are soft-404s, so no raw files were saved and no WellKnown /
+  SecurityTxt pointer is wired in apis.yml. Absence is the honest result.
+hosts:
+  - host: https://blink.net
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        soft_404: true
+      - path: /.well-known/openid-configuration
+        status: 200
+        soft_404: true
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        soft_404: true
+      - path: /.well-known/api-catalog
+        status: 200
+        soft_404: true
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        soft_404: true
+  - host: https://api.blink.net
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        soft_404: true
+      - path: /.well-known/openid-configuration
+        status: 200
+        soft_404: true
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        soft_404: true
+      - path: /.well-known/api-catalog
+        status: 200
+        soft_404: true
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        soft_404: true
+  - host: https://docs.blink.net
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        soft_404: true
+      - path: /.well-known/openid-configuration
+        status: 200
+        soft_404: true
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        soft_404: true
+      - path: /.well-known/api-catalog
+        status: 200
+        soft_404: true
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        soft_404: true
+  - host: https://dashboard.blink.net
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        soft_404: true
+      - path: /.well-known/openid-configuration
+        status: 200
+        soft_404: true
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        soft_404: true
+      - path: /.well-known/api-catalog
+        status: 200
+        soft_404: true
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        soft_404: true
+other_probes:
+  - path: https://blink.net/llms.txt
+    status: 200
+    soft_404: true
+  - path: https://docs.blink.net/llms.txt
+    status: 200
+    soft_404: true
+  - path: https://blink.net/robots.txt
+    status: 200
+    soft_404: true
+  - path: https://docs.blink.net/sitemap.xml
+    status: 200
+    soft_404: false

@@ -1,0 +1,18 @@
+{
+  "provider": "blink-ledger-systems",
+  "sources": [
+    "blink-ledger-systems-authentication-api-openapi.yml",
+    "blink-ledger-systems-oauth-applications-api-openapi.yml",
+    "blink-ledger-systems-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "blink-ledger-systems-authentication-api-openapi.yml",
+    "blink-ledger-systems-oauth-applications-api-openapi.yml",
+    "blink-ledger-systems-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

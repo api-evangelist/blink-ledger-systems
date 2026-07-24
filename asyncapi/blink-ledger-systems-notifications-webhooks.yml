@@ -1,0 +1,152 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/notifications/webHooks.html
+type: Webhooks
+docs:
+  - https://docs.blink.net/docs/notifications/webHooks.html
+  - https://docs.blink.net/docs/notifications/event.html
+notes: >-
+  Blink publishes no AsyncAPI document — searches of the docs host, the
+  sitemap, /asyncapi.yaml and GitHub found none, and there is no public GitHub
+  organization. Blink does publish a complete, documented webhook
+  ("notifications") catalog, captured here verbatim from the reference. Nothing
+  is fabricated: every event type below appears in Blink's own event-type
+  table.
+asyncapi_published: false
+delivery:
+  transport: http
+  method: POST
+  content_type: application/json
+  registration:
+    self_service: false
+    contact: biz.support@blink.net
+    note: >-
+      Webhooks are registered by Blink on request. You must provide the
+      endpoint URL and the event type to subscribe that endpoint to.
+  retry:
+    success_status: 200
+    timeout_seconds: 10
+    policy: >-
+      A non-200 response or a timeout after 10 seconds causes the request to be
+      retried a few times in the upcoming hours. Blink does not publish an
+      exact retry count or backoff schedule.
+  ordering_guarantee: not_published
+  deduplication: not_published
+authentication:
+  - id: token
+    type: header
+    header: Blink-Echo-Token
+    optional: true
+    description: >-
+      Opt-in at registration time. Blink generates and displays a secret token
+      once; it is then sent as the Blink-Echo-Token header on every POST.
+  - id: signature
+    type: ed25519
+    encoding: base16
+    always_present: true
+    signed_over: >-
+      The canonical form of the JSON object under the `event` key — no
+      whitespace, object keys sorted lexicographically.
+    fields:
+      algorithm: Always "ed25519".
+      encoding: Always "base16".
+      publicKey: Public key used to sign the notification event.
+      signature: Signature over the notification event.
+    description: >-
+      Present on every notification, so receivers that cannot store secrets can
+      still verify authenticity without a shared token.
+envelope:
+  shape: '{"event": {...}, "signature": {...}}'
+  common_fields:
+    - name: event.type
+      type: string
+      always_present: true
+      description: String describing the event type.
+    - name: event.timestamp
+      type: string
+      always_present: true
+      description: Event timestamp (ISO 8601 in all published examples).
+    - name: event.user
+      type: object
+      description: The Blink user the event concerns.
+    - name: event.merchant
+      type: object
+      description: The merchant (publisher) the event concerns.
+events:
+  - type: subscription_created
+    title: Subscription Created
+    description: A new subscription was successfully created.
+    payload:
+      - event.user
+      - event.merchant
+      - event.subscription
+    docs: https://docs.blink.net/docs/notifications/subscriptionCreated.html
+  - type: subscription_canceled
+    title: Subscription Canceled
+    payload:
+      - event.user
+      - event.merchant
+      - event.subscription
+    docs: https://docs.blink.net/docs/notifications/subscriptionCanceled.html
+  - type: subscription_reactivated
+    title: Subscription Reactivated
+    payload:
+      - event.user
+      - event.merchant
+      - event.subscription
+    docs: https://docs.blink.net/docs/notifications/subscriptionReactivated.html
+  - type: subscription_finished
+    title: Subscription Finished
+    payload:
+      - event.user
+      - event.merchant
+      - event.subscription
+    docs: https://docs.blink.net/docs/notifications/subscriptionFinished.html
+  - type: subscription_unpaid
+    title: Subscription Unpaid
+    payload:
+      - event.user
+      - event.merchant
+      - event.subscription
+    docs: https://docs.blink.net/docs/notifications/subscriptionUnpaid.html
+  - type: payment_created
+    title: Payment Created
+    payload:
+      - event.user
+      - event.merchant
+      - event.payment
+    docs: https://docs.blink.net/docs/notifications/paymentCreated.html
+  - type: payment_refunded
+    title: Payment Refunded
+    description: A previous payment was refunded.
+    payload:
+      - event.user
+      - event.merchant
+      - event.payment
+    docs: https://docs.blink.net/docs/notifications/paymentRefunded.html
+  - type: donation_created
+    title: Donation Created
+    description: >-
+      Not listed in Blink's summary event-type table, but documented and shown
+      as the worked example on the webhooks page.
+    payload:
+      - event.user
+      - event.merchant
+      - event.donation
+    docs: https://docs.blink.net/docs/notifications/webHooks.html
+payload_objects:
+  - name: amount
+    docs: https://docs.blink.net/docs/notifications/amount.html
+  - name: user
+    docs: https://docs.blink.net/docs/notifications/user.html
+  - name: merchant
+    docs: https://docs.blink.net/docs/notifications/merchant.html
+  - name: subscription
+    docs: https://docs.blink.net/docs/notifications/subscription.html
+  - name: donation
+    docs: https://docs.blink.net/docs/notifications/donation.html
+  - name: payment
+    docs: https://docs.blink.net/docs/notifications/payment.html
+related:
+  - data-model/blink-ledger-systems-data-model.yml
+  - conventions/blink-ledger-systems-conventions.yml

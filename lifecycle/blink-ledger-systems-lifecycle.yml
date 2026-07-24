@@ -1,0 +1,62 @@
+generated: '2026-07-20'
+method: searched
+source: https://status.blink.net
+docs:
+  - https://docs.blink.net/docs/getting-started/environments.html
+  - https://docs.blink.net/docs/getting-started/support.html
+summary: >-
+  Blink runs a public status page and versions its SDK bundle by path segment,
+  but publishes no changelog, no deprecation policy, no SLA and no roadmap.
+versioning:
+  scheme: path_segment
+  current: '1.0'
+  applies_to: Blink SDK for JavaScript
+  evidence: https://blink.net/1.0/blink-sdk.js
+  api_versioning: none_documented
+  note: >-
+    The server-side API paths carry no version identifier. The SDK bundle's
+    /1.0/ prefix is the only version signal Blink exposes.
+status_page:
+  url: https://status.blink.net
+  provider: OnlineOrNot
+  method: probed
+  probed: '2026-07-20'
+  components:
+    - name: Website
+      state: operational
+    - name: API
+      state: operational
+  subscribe: true
+  incident_history: true
+  observed: All Systems Operational; no incidents reported in the last 14 days.
+deprecation_policy:
+  published: false
+  sunset_header: not_observed
+  deprecation_header: not_observed
+  rfc8594: false
+  note: >-
+    No deprecation or sunset policy is published, and no deprecated operations
+    are marked anywhere in the documentation.
+sla:
+  published: false
+changelog:
+  published: false
+  note: >-
+    No dated changelog or release-notes page exists on blink.net or
+    docs.blink.net; the docs sitemap contains no changelog entry. No
+    changelog/ artifact is emitted.
+roadmap:
+  published: false
+support:
+  general: support@blink.net
+  integration: integration@blink.net
+  business_webhooks: biz.support@blink.net
+  docs: https://docs.blink.net/docs/getting-started/support.html
+build_signals:
+  sdk_last_modified: 'Thu, 16 Jul 2026 13:00:07 GMT'
+  sdk_size_bytes: 98702
+  method: probed
+  note: >-
+    Observed from response headers on https://blink.net/1.0/blink-sdk.js —
+    evidence the SDK is actively maintained even though no changelog is
+    published.

@@ -1,0 +1,15 @@
+generated: '2026-07-20'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: blink.net
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 28 23:59:59 2026 GMT
+  hsts: false
+domains:
+- domain: blink.net
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

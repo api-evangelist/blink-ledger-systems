@@ -1,0 +1,125 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/server-side-api/
+docs:
+  - https://docs.blink.net/docs/server-side-api/get-auth-token.html
+  - https://docs.blink.net/docs/server-side-api/register-oauth-application.html
+  - https://docs.blink.net/docs/server-side-api/get-user-profile.html
+  - https://docs.blink.net/docs/api-reference/getAuthorizationCode.html
+format: proprietary
+rfc9457: false
+notes: >-
+  Blink does not use RFC 9457 application/problem+json. Errors are a plain JSON
+  object with a numeric `code` and a human-readable `message`. Two envelope
+  shapes are in use and both were observed: the documented server-side-API
+  shape {code, message}, and a nested shape {"error": {code, message, fields}}
+  returned live by api.blink.net. Codes appear to be banded by domain — 15xx
+  for account/credential errors, 19xx for OAuth, 10xx for routing/resource.
+  Only codes Blink actually publishes (or that were observed on a live probe)
+  are listed; the registry is not exhaustive and Blink publishes no complete
+  error reference.
+envelopes:
+  - id: server_side_api
+    shape: '{"code": <int>, "message": <string>}'
+    used_by:
+      - POST /users/login/
+      - POST /oauth/applications/register/
+      - POST /oauth/access_token/
+      - blinkSDK.getAuthorizationCode() errorCallback
+    source: https://docs.blink.net/docs/server-side-api/get-auth-token.html
+  - id: gateway
+    shape: '{"error": {"code": <int>, "message": <string>, "fields": []}}'
+    used_by:
+      - api.blink.net unmatched routes
+    source: live probe of https://api.blink.net/ on 2026-07-20
+    method: probed
+problem_types:
+  - code: 1006
+    title: Object not found
+    band: resource
+    http_status: 200
+    operations:
+      - any unmatched api.blink.net route
+    remediation: >-
+      Verify the request path against the server-side API reference. Note that
+      Blink returns HTTP 200 with an error body rather than a 4xx status for
+      unknown routes, so clients must inspect the body, not the status line.
+    evidence: live probe of https://api.blink.net/ on 2026-07-20
+    method: probed
+  - code: 1500
+    title: Invalid email address
+    band: credentials
+    operations:
+      - getAuthToken
+    remediation: Supply the email address from the client credentials Blink issued.
+    evidence: https://docs.blink.net/docs/server-side-api/get-auth-token.html
+  - code: 1509
+    title: Invalid credentials
+    band: credentials
+    operations:
+      - getAuthToken
+    remediation: >-
+      The email/password pair was rejected. Re-check the client credentials;
+      contact integration@blink.net if they are unknown.
+    evidence: https://docs.blink.net/docs/server-side-api/get-auth-token.html
+  - code: 1901
+    title: Invalid grant type
+    band: oauth
+    operations:
+      - getUserProfile
+    remediation: >-
+      grant_type is optional but, when sent, accepts only the literal value
+      "authorization_code".
+    evidence: https://docs.blink.net/docs/server-side-api/get-user-profile.html
+  - code: 1902
+    title: Invalid grant code
+    band: oauth
+    operations:
+      - getUserProfile
+    remediation: >-
+      The authorization code is unknown, already consumed or expired. Re-run
+      blinkSDK.getAuthorizationCode() to obtain a fresh one.
+    evidence: https://docs.blink.net/docs/server-side-api/get-user-profile.html
+  - code: 1903
+    title: Invalid redirect uri
+    band: oauth
+    operations:
+      - registerOAuthApplication
+    remediation: >-
+      redirectUris must be a space-separated list of valid URIs. The
+      redirect_uri sent at token exchange must be one of them.
+    evidence: https://docs.blink.net/docs/server-side-api/register-oauth-application.html
+  - code: 1904
+    title: Invalid client credentials
+    band: oauth
+    operations:
+      - getUserProfile
+    remediation: >-
+      client_id/client_secret do not match a registered OAuth application. Call
+      getOAuthApplications to retrieve the current config.
+    evidence: https://docs.blink.net/docs/server-side-api/get-user-profile.html
+  - code: 1905
+    title: Invalid application name
+    band: oauth
+    operations:
+      - registerOAuthApplication
+    remediation: Supply a valid non-empty OAuth application name.
+    evidence: https://docs.blink.net/docs/server-side-api/register-oauth-application.html
+  - code: 1906
+    title: Application name already exists
+    band: oauth
+    operations:
+      - registerOAuthApplication
+    remediation: >-
+      Choose a different application name, or call getOAuthApplications to
+      reuse the existing registration.
+    evidence: https://docs.blink.net/docs/server-side-api/register-oauth-application.html
+  - code: 1908
+    title: There is already an application registered for this account
+    band: oauth
+    operations:
+      - registerOAuthApplication
+    remediation: >-
+      One OAuth application per client account. Call getOAuthApplications and
+      reuse the returned clientId/clientSecret instead of registering again.
+    evidence: https://docs.blink.net/docs/server-side-api/register-oauth-application.html

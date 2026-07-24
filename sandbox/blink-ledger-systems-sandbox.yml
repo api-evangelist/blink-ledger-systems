@@ -1,0 +1,81 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/getting-started/environments.html
+docs:
+  - https://docs.blink.net/docs/getting-started/environments.html
+  - https://docs.blink.net/docs/getting-started/quick-start.html
+summary: >-
+  Blink publishes two public environments, production and test. The test
+  environment is a full parallel deployment — its own user dashboard, merchant
+  dashboard, SDK bundle and API host — and processes only test cards. Adding a
+  real card number to a test account is explicitly not allowed. Test clientIds
+  are issued on request by Blink rather than self-service.
+environments:
+  - id: production
+    live: true
+    user_dashboard: https://blink.net
+    merchant_dashboard: https://dashboard.blink.net
+    sdk: https://blink.net/1.0/blink-sdk.js
+    api_base: https://api.blink.net
+    note: Uses real cards and processes real money transactions.
+  - id: test
+    live: false
+    user_dashboard: https://test.blink.net
+    merchant_dashboard: https://dashboard.test.blink.net
+    sdk: https://test.blink.net/1.0/blink-sdk.js
+    api_base: https://api.test.blink.net
+    note: >-
+      Uses only test cards. Adding a real card number to a test account is not
+      allowed. Recommended for integrating Blink against a sandbox/test
+      instance of your web application before going live.
+provisioning:
+  self_service: false
+  contact: integration@blink.net
+  note: >-
+    "If you don't have a clientId for our test environment set up yet, contact
+    us at integration@blink.net and we'll get you one."
+test_cards:
+  note: >-
+    Published verbatim in the Blink environments documentation. Every card
+    accepts any 3-digit CVC and any future expiry date.
+  cvc: Any 3 digits
+  expiry: Any future date
+  cards:
+    - number: '4242 4242 4242 4242'
+      brand: Visa
+    - number: '4000 0566 5566 5556'
+      brand: Visa (debit)
+    - number: '5555 5555 5555 4444'
+      brand: Mastercard
+    - number: '2223 0031 2200 3222'
+      brand: Mastercard (2-series)
+    - number: '5200 8282 8282 8210'
+      brand: Mastercard (debit)
+    - number: '5105 1051 0510 5100'
+      brand: Mastercard (prepaid)
+    - number: '3782 822463 10005'
+      brand: American Express
+    - number: '3714 496353 98431'
+      brand: American Express
+    - number: '6011 1111 1111 1117'
+      brand: Discover
+    - number: '6011 0009 9013 9424'
+      brand: Discover
+    - number: '3056 9300 0902 0004'
+      brand: Diners Club
+    - number: '3622 7206 2716 67'
+      brand: Diners Club (14 digit card)
+    - number: '3566 0020 2036 0505'
+      brand: JCB
+    - number: '6200 0000 0000 0005'
+      brand: UnionPay
+demo:
+  url: https://blinktribune.com/
+  description: >-
+    Blink Tribune — a live demo publication showing the Blink identity,
+    subscription and donation flows end to end.
+not_published:
+  - test_clocks_time_simulation
+  - fixture_or_trigger_tooling
+  - test_bank_accounts
+  - decline_simulation_values

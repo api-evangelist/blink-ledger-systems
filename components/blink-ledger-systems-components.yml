@@ -1,0 +1,95 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/user-journeys/actions.html
+docs:
+  - https://docs.blink.net/docs/user-journeys/actions.html
+  - https://docs.blink.net/docs/panels/panel-options.html
+  - https://docs.blink.net/docs/getting-started/blink-branded-css.html
+summary: >-
+  Blink's integration model is component-first: rather than calling a REST API
+  from the browser, publishers place Blink-managed UI components ("PGs") into
+  the page via CSS selectors, either declaratively through User Journeys or
+  imperatively through SDK modal calls. Blink also ships branded CSS so a
+  publisher's own login button matches the Blink identity.
+loader:
+  library: Blink SDK for JavaScript
+  global: window.blinkSDK
+  script: https://blink.net/1.0/blink-sdk.js?clientId=YOUR_CLIENT_ID
+  script_test: https://test.blink.net/1.0/blink-sdk.js?clientId=YOUR_CLIENT_ID
+  see: packages/blink-ledger-systems-packages.yml
+families:
+  - name: Managed panels (PG)
+    description: >-
+      A Blink-managed component created by the createPG User Journey action and
+      inserted into every element matching a CSS selector. Configured from the
+      merchant dashboard; content and branding are editable per panel.
+    placement:
+      mechanism: createPG action
+      parameters:
+        - {name: selector, required: true, description: CSS selector determining where to place the element}
+        - {name: panelType, required: false, description: One of donation, subscribe, newsletter, payment, custom. Defaults to custom.}
+        - {name: gateType, required: false, description: One of cover, preview, banner, popup. Omit for an ungated panel.}
+        - {name: pgId, required: false, description: Numerical ID or dashboard name of a specific panel.}
+        - {name: context, required: false, description: Extra template context applied on top of the panel's own context option.}
+    panel_types:
+      - donation
+      - subscribe
+      - newsletter
+      - payment
+      - custom
+    gate_types:
+      - cover
+      - preview
+      - banner
+      - popup
+    docs: https://docs.blink.net/docs/user-journeys/actions.html
+  - name: Modal flows
+    description: >-
+      Hosted, prebuilt modal dialogs invoked directly from the SDK. Each
+      handles the unauthenticated case by showing the Blink login/signup form
+      first, then seamlessly transforming into the target form.
+    components:
+      - name: Donation modal
+        invoke: blinkSDK.showDonationModal()
+        description: Shows a configurable branded panel with a call-to-action before the donation form.
+        docs: https://docs.blink.net/docs/api-reference/showDonationModal.html
+      - name: Donation popup
+        invoke: blinkSDK.promptDonationPopup()
+        description: Same flow as showDonationModal but skips the first panel.
+        docs: https://docs.blink.net/docs/api-reference/promptDonationPopup.html
+      - name: Subscription popup
+        invoke: blinkSDK.promptSubscriptionPopup()
+        description: Opens the Blink subscription widget and starts the subscription flow.
+        docs: https://docs.blink.net/docs/api-reference/promptSubscriptionPopup.html
+      - name: Login modal
+        invoke: blinkSDK.getAuthorizationCode(callback, [errorCallback])
+        description: Opens the Blink login/signup modal and returns an OAuth authorization code.
+        docs: https://docs.blink.net/docs/api-reference/getAuthorizationCode.html
+  - name: Containers
+    description: >-
+      Named container elements documented in the SDK API reference for hosting
+      Blink surfaces inside the page.
+    components:
+      - name: blinkContainer
+        docs: https://docs.blink.net/docs/api-reference/blinkContainer.html
+      - name: blinkDonationContainer
+        docs: https://docs.blink.net/docs/api-reference/blinkDonationContainer.html
+      - name: contentManagementContainer
+        docs: https://docs.blink.net/docs/api-reference/contentManagementContainer.html
+  - name: Branded CSS
+    description: >-
+      Blink-supplied stylesheet for colouring a publisher's own "Continue with
+      Blink" login button so it matches Blink's identity.
+    docs: https://docs.blink.net/docs/getting-started/blink-branded-css.html
+orchestration:
+  name: User Journeys
+  description: >-
+    A declarative rules engine, configured in the merchant dashboard, that
+    evaluates conditions against page state and SDK variables, then fires
+    actions — placing a component (createPG) or calling a publisher JavaScript
+    function (callback). Throttle rules control how often a journey's actions
+    run within a context; journey groups compose them.
+  docs: https://docs.blink.net/docs/user-journeys/basics.html
+  extension_points:
+    - {api: blinkSDK.addFunction / addFunctions, description: Register publisher JS callable from journey conditions, actions and panel template expressions.}
+    - {api: blinkSDK.setVariable / getVariable, description: Variables scoped permanent, tab or memory that journeys re-evaluate against.}

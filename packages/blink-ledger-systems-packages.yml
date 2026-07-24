@@ -1,0 +1,37 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.blink.net/docs/api-reference/load-blink-sdk.html
+notes: >-
+  Blink distributes its one first-party client library — the Blink SDK for
+  JavaScript — as a hosted script served from its own origin, not through a
+  public package registry. Searches of npm, PyPI, Maven Central, NuGet,
+  pkg.go.dev, RubyGems, Packagist and crates.io returned no first-party Blink
+  (blink.net) package; the "blink-sdk" / "@blink-sdk/*" / "@blinkdotnew/*"
+  namespaces on npm belong to unrelated companies. No public GitHub
+  organization was found (api.github.com/orgs/blink-net -> 404).
+registries_searched:
+  - npm
+  - pypi
+  - maven-central
+  - nuget
+  - pkg.go.dev
+  - rubygems
+  - packagist
+  - crates.io
+packages:
+  - language: javascript
+    registry: hosted
+    name: blink-sdk.js
+    version: '1.0'
+    url: https://docs.blink.net/docs/api-reference/load-blink-sdk.html
+    dist: https://blink.net/1.0/blink-sdk.js
+    dist_test: https://test.blink.net/1.0/blink-sdk.js
+    install: >-
+      <script src="https://blink.net/1.0/blink-sdk.js?clientId=YOUR_CLIENT_ID"
+      type="text/javascript"></script>
+    official: true
+    description: >-
+      Browser SDK that exposes window.blinkSDK. Loaded asynchronously via a
+      script tag with the merchant clientId as a query parameter; self-managed,
+      requiring no manual initialization after the tag is added. Provides the
+      identity, subscription, donation and payment surface.

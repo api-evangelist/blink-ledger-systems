@@ -1,0 +1,96 @@
+generated: '2026-07-20'
+method: derived
+source: >-
+  docs.blink.net server-side API + notifications reference, and
+  openapi/blink-ledger-systems-server-side-api-openapi.yml
+notes: >-
+  Blink makes no formal compliance claims anywhere on its public surface — no
+  trust center, no certification page, no SOC 2 / ISO 27001 / PCI DSS / GDPR
+  statement was found. The assertions below are derived from what the
+  documentation and live probes actually show, not from vendor claims. No
+  `Compliance` pointer is wired in apis.yml because nothing is published to
+  support one.
+standards:
+  - id: oauth2
+    conforms: partial
+    evidence: >-
+      An authorization-code flow is documented — client registration with
+      redirectUris, an authorization code obtained client-side, and exchange at
+      POST /oauth/access_token/ with client_id/client_secret/code/grant_type/
+      redirect_uri. Deviates from RFC 6749 in that the token endpoint returns a
+      user profile rather than an access_token/token_type/expires_in response,
+      there is no /authorize endpoint, no scope parameter, and no PKCE.
+    docs: https://docs.blink.net/docs/server-side-api/get-user-profile.html
+  - id: oidc
+    conforms: false
+    evidence: >-
+      No OpenID Connect discovery document, no id_token, no userinfo endpoint.
+      /.well-known/openid-configuration soft-404s on every host.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors are {"code": <int>, "message": <string>}, not
+      application/problem+json. See errors/blink-ledger-systems-problem-types.yml.
+  - id: rfc8032_ed25519
+    conforms: true
+    evidence: >-
+      Webhook notifications are signed with ed25519 over the canonicalized
+      event object; the SDK's requestPayment accepts an ed25519
+      merchantPublicKey and paymentInfoSignature.
+    docs: https://docs.blink.net/docs/notifications/webHooks.html
+  - id: iso4217
+    conforms: true
+    evidence: All money objects carry a `currency` / `currencyIsoCode` ISO 4217 code.
+    docs: https://docs.blink.net/docs/notifications/amount.html
+  - id: iso8601
+    conforms: true
+    evidence: All timestamps are ISO 8601 with microsecond precision and Z offset.
+  - id: webhooks
+    conforms: true
+    evidence: >-
+      Eight documented event types delivered as signed JSON POSTs with a
+      published retry contract. See
+      asyncapi/blink-ledger-systems-notifications-webhooks.yml.
+  - id: asyncapi
+    conforms: false
+    evidence: No AsyncAPI document is published.
+  - id: openapi
+    conforms: false
+    evidence: >-
+      Blink publishes no machine-readable specification. The OpenAPI in this
+      repo is a faithful transcription by API Evangelist, not a provider
+      artifact.
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency key or retry-safety contract is documented for any write.
+  - id: pagination
+    conforms: false
+    evidence: No paged collection or cursor/limit/offset parameter is documented.
+  - id: json_api
+    conforms: false
+    evidence: Plain JSON objects; no JSON:API document structure.
+  - id: http_status_semantics
+    conforms: false
+    evidence: >-
+      api.blink.net returns HTTP 200 with an error body for unmatched routes
+      (observed: code 1006 "Object not found") rather than a 4xx status.
+    method: probed
+  - id: rfc9116_security_txt
+    conforms: false
+    evidence: /.well-known/security.txt soft-404s on every Blink host.
+    method: probed
+  - id: pci_dss
+    conforms: unknown
+    evidence: >-
+      Blink processes card payments and publishes a test-card list, but makes
+      no public PCI DSS claim. Card capture appears to happen inside
+      Blink-hosted modal components, which would keep the publisher's page out
+      of scope, but this is not stated by Blink.
+  - id: soc2
+    conforms: unknown
+    evidence: No trust center, audit report or certification page found.
+  - id: gdpr
+    conforms: unknown
+    evidence: >-
+      A privacy policy exists at https://blink.net/privacy-policy but is
+      rendered client-side and was not machine-readable at probe time.

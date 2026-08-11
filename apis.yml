@@ -151,6 +151,8 @@ apis:
   - type: ErrorCatalog
     url: errors/blink-ledger-systems-problem-types.yml
 common:
+  - type: MCPServer
+    url: mcp/blink-ledger-systems-mcp.yml
   - type: Website
     url: https://blink.net
   - type: DeveloperPortal
@@ -172,7 +174,7 @@ common:
   - type: StatusPage
     url: https://status.blink.net
   - type: OpenAPI
-    url: openapi/blink-ledger-systems-server-side-api-openapi.yml
+    url: openapi/_original/blink-ledger-systems-server-side-api-openapi.yml
   - type: Overlay
     url: overlays/blink-ledger-systems-server-side-api-overlay.yaml
   - type: Packages

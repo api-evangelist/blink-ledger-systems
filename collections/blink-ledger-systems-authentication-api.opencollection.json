@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blink Server-Side Authentication API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a server-side login token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blink.net/users/login/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates the application using the client credentials and returns a valid login token useful for making server-side API calls requiring authorization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

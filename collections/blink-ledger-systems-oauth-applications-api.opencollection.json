@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blink Server-Side Authentication OAuth Applications API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Register an OAuth application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blink.net/oauth/applications/register/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Registers a new OAuth application to your client account."
+        },
+        {
+          "info": {
+            "name": "List OAuth applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blink.net/oauth/applications/",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the list of all the OAuth applications registered to your client account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

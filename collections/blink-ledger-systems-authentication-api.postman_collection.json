@@ -1,0 +1,172 @@
+{
+  "item": [
+    {
+      "id": "b6f92b5d-3648-4315-8eac-ef72f04ae4c2",
+      "name": "Authentication",
+      "description": {
+        "content": "Client account login and bearer token issuance.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "11ea1152-6bf0-4bac-9377-ddedfb00eafa",
+          "name": "Get a server-side login token",
+          "request": {
+            "name": "Get a server-side login token",
+            "description": {
+              "content": "Authenticates the application using the client credentials and returns a valid login token useful for making server-side API calls requiring authorization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "login",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<password>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ecd9bfe-7c0a-43df-a2b9-d87ec184781c",
+              "name": "A valid login token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "login",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b247a735-e827-40f8-8aea-dd1f4390035e",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "login",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<email>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8362,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blink.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "19d3b9b7-1464-4431-8baf-8959ffcbcaa5",
+    "name": "Blink Server-Side Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side web APIs a publisher integrates on the back end of their web application to support \"Login with Blink\" and OAuth2. Transcribed faithfully from the published Blink documentation at https://docs.blink.net/docs/server-side-api/api-overview.html — Blink does not publish a machine-readable specification of its own. Paths, methods, request bodies, response shapes and error codes are exactly as documented; nothing has been invented. Field descriptions that the docs leave implicit are omitted rather than guessed.\n\nContact Support:\n Name: Blink Integration\n Email: integration@blink.net",
+      "type": "text/plain"
+    }
+  }
+}

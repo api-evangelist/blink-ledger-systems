@@ -1,0 +1,289 @@
+{
+  "item": [
+    {
+      "id": "08877b5b-db81-473f-a5da-72a4edbfeb9c",
+      "name": "OAuth Applications",
+      "description": {
+        "content": "Registration and retrieval of OAuth application credentials.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1b6fdcc2-7f56-497e-8863-fa21290120ef",
+          "name": "Register an OAuth application",
+          "request": {
+            "name": "Register an OAuth application",
+            "description": {
+              "content": "Registers a new OAuth application to your client account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "applications",
+                "register",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"redirectUris\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6915d63e-a145-4140-a118-c878ada45820",
+              "name": "The registered OAuth application config.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "applications",
+                    "register",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirectUris\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clientId\": \"string\",\n  \"clientSecret\": \"string\",\n  \"redirectUris\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ed9734d-5553-45df-8ffb-1cd8a7c273e5",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "applications",
+                    "register",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirectUris\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8543,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a556058-8665-4d28-9ff7-4744e5b3b291",
+          "name": "List OAuth applications",
+          "request": {
+            "name": "List OAuth applications",
+            "description": {
+              "content": "Retrieves the list of all the OAuth applications registered to your client account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "applications",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a5fbbb29-a132-4307-8937-f222adffe61b",
+              "name": "An array of OAuth application configs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "applications",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"clientId\": \"string\",\n    \"clientSecret\": \"string\",\n    \"redirectUris\": \"string\"\n  },\n  {\n    \"clientId\": \"string\",\n    \"clientSecret\": \"string\",\n    \"redirectUris\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blink.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "348efe70-53aa-4379-839c-e097b3084773",
+    "name": "Blink Server-Side Authentication OAuth Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Server-side web APIs a publisher integrates on the back end of their web application to support \"Login with Blink\" and OAuth2. Transcribed faithfully from the published Blink documentation at https://docs.blink.net/docs/server-side-api/api-overview.html — Blink does not publish a machine-readable specification of its own. Paths, methods, request bodies, response shapes and error codes are exactly as documented; nothing has been invented. Field descriptions that the docs leave implicit are omitted rather than guessed.\n\nContact Support:\n Name: Blink Integration\n Email: integration@blink.net",
+      "type": "text/plain"
+    }
+  }
+}

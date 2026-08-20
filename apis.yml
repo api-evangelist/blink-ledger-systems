@@ -42,6 +42,19 @@ tags:
   - Payments
   - Identity
   - Authentication
+  - Publishing
+  - Media
+  - Subscription
+  - Donations
+  - Micropayments
+  - Paywall
+  - Webhook
+tags_raw:
+  - Company
+  - Infrastructure
+  - Payments
+  - Identity
+  - Authentication
   - OAuth
   - Publishing
   - Media
@@ -68,6 +81,11 @@ apis:
   tags:
   - Payments
   - Identity
+  - Subscription
+  - Donations
+  tags_raw:
+  - Payments
+  - Identity
   - Subscriptions
   - Donations
   properties:
@@ -88,6 +106,10 @@ apis:
   humanURL: https://docs.blink.net/docs/notifications/webHooks.html
   baseURL: https://api.blink.net
   tags:
+  - Webhook
+  - Event
+  - Payments
+  tags_raw:
   - Webhooks
   - Events
   - Payments
@@ -138,6 +160,8 @@ apis:
   humanURL: https://docs.blink.net/docs/server-side-api/api-overview.html
   baseURL: https://api.blink.net
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI

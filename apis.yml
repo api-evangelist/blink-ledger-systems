@@ -13,6 +13,18 @@ description: >-
   subscription, payment and donation events. Founded 2017; incorporated in the
   US in 2018 and surfaced in the API Evangelist network as a Polychain
   portfolio company.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve

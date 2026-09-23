@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for the Blink Server-Side API
   version: 1.0.0
-  description: >-
+  x-description: >-
     Enhancements layered over
     openapi/blink-ledger-systems-server-side-api-openapi.yml. Captures the
     cross-cutting semantics Blink documents in prose but that do not appear in

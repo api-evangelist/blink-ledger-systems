@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Blink Server-Side Authentication Users API
+  title: Blink Server-Side Users API
   version: '1.0'
-  description: Server-side web APIs a publisher integrates on the back end of their web application to support "Login with Blink" and OAuth2. Transcribed faithfully from the published Blink documentation at https://docs.blink.net/docs/server-side-api/api-overview.html — Blink does not publish a machine-readable specification of its own. Paths, methods, request bodies, response shapes and error codes are exactly as documented; nothing has been invented. Field descriptions that the docs leave implicit are omitted rather than guessed.
+  description: Server-side web APIs a publisher integrates on the back end of their web application to support "Login with Blink" and OAuth2.
   contact:
     name: Blink Integration
     email: integration@blink.net
@@ -50,6 +50,15 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
     UserProfileResponse:
       type: object
       properties:
@@ -60,15 +69,6 @@ components:
               type: string
               format: email
               description: Blink user's email address.
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
     AccessTokenRequest:
       type: object
       required:

@@ -1,9 +1,7 @@
 {
   "provider": "blink-ledger-systems",
   "sources": [
-    "blink-ledger-systems-authentication-api-openapi.yml",
-    "blink-ledger-systems-oauth-applications-api-openapi.yml",
-    "blink-ledger-systems-users-api-openapi.yml"
+    "_original/blink-ledger-systems-server-side-api-openapi.yml"
   ],
   "outputs": [
     "blink-ledger-systems-authentication-api-openapi.yml",
@@ -13,6 +11,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "blink-ledger-systems-server-side-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "blink-ledger-systems-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "blink-ledger-systems-oauth-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "blink-ledger-systems-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

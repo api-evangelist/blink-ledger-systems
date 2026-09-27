@@ -48,15 +48,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
     LoginRequest:
       type: object
       required:
@@ -77,6 +68,15 @@ components:
         key:
           type: string
           description: A valid login token.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
   securitySchemes:
     loginToken:
       type: http

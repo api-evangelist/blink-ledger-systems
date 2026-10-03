@@ -62,12 +62,6 @@ components:
           type: string
           format: password
           description: Password from your client credentials.
-    LoginToken:
-      type: object
-      properties:
-        key:
-          type: string
-          description: A valid login token.
     Error:
       type: object
       properties:
@@ -77,6 +71,12 @@ components:
         message:
           type: string
           description: Error message.
+    LoginToken:
+      type: object
+      properties:
+        key:
+          type: string
+          description: A valid login token.
   securitySchemes:
     loginToken:
       type: http

@@ -80,6 +80,15 @@ components:
         redirectUris:
           type: string
           description: A space separated string list of all your OAuth redirect URIs.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
     RegisterApplicationRequest:
       type: object
       required:
@@ -92,15 +101,6 @@ components:
         redirectUris:
           type: string
           description: A space separated string list of all your OAuth redirect URIs.
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
   securitySchemes:
     loginToken:
       type: http

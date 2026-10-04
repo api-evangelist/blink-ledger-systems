@@ -50,15 +50,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Error message.
     UserProfileResponse:
       type: object
       properties:
@@ -69,6 +60,15 @@ components:
               type: string
               format: email
               description: Blink user's email address.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Error message.
     AccessTokenRequest:
       type: object
       required:

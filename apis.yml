@@ -43,7 +43,7 @@ x-tier: profiled
 x-tier-reason: enriched-from-public-docs
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-10-06'
 x-docs-platform: docusaurus
 x-docs-platform-confidence: medium
 x-docs-platform-checked: 2026-09-20
@@ -184,6 +184,8 @@ apis:
   - type: ErrorCatalog
     url: errors/blink-ledger-systems-problem-types.yml
 common:
+- url: https://blink.net/blog/
+  type: Blog
 - type: X-MCPServerCandidate
   url: mcp/blink-ledger-systems-mcp.yml
   note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate

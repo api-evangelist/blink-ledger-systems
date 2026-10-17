@@ -48,6 +48,12 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    LoginToken:
+      type: object
+      properties:
+        key:
+          type: string
+          description: A valid login token.
     LoginRequest:
       type: object
       required:
@@ -62,12 +68,6 @@ components:
           type: string
           format: password
           description: Password from your client credentials.
-    LoginToken:
-      type: object
-      properties:
-        key:
-          type: string
-          description: A valid login token.
     Error:
       type: object
       properties:

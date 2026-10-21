@@ -1,0 +1,106 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 6
+  own: 6
+  other_domain: 0
+  platform: 0
+  roles:
+  - api
+  - other
+  - portal
+  - status
+  - website
+hosts:
+- host: api.blink.net
+  found_by:
+  - apis[]
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: blink.net
+  role: api
+  relation: own
+- host: api.test.blink.net
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: blink.net
+  role: api
+  relation: own
+- host: blink.net
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Blog
+  - Website
+  - SignUp
+  - TermsOfService
+  - PrivacyPolicy
+  serves:
+  - api
+  - cdn
+  vendor: cloudfront
+  registrable_domain: blink.net
+  role: website
+  relation: own
+- host: dev.blink.net
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  - well-known
+  types: []
+  serves:
+  - docs
+  registrable_domain: blink.net
+  role: other
+  relation: own
+- host: docs.blink.net
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - Support
+  serves:
+  - docs
+  - documentation
+  vendor: docusaurus
+  registrable_domain: blink.net
+  role: portal
+  relation: own
+- host: status.blink.net
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: blink.net
+  role: status
+  relation: own

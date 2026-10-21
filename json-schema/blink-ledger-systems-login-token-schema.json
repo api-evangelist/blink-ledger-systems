@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/blink-ledger-systems/main/json-schema/blink-ledger-systems-login-token-schema.json",
+  "title": "LoginToken",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/blink-ledger-systems-authentication-api-openapi.yml#/components/schemas/LoginToken",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "A valid login token."
+    }
+  }
+}

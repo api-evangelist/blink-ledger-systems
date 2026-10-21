@@ -1,7 +1,7 @@
 {
   "provider": "blink-ledger-systems",
   "sources": [
-    "_original/blink-ledger-systems-server-side-api-openapi.yml"
+    "_ae-authored/blink-ledger-systems-server-side-api-openapi.yml"
   ],
   "outputs": [
     "blink-ledger-systems-authentication-api-openapi.yml",
@@ -12,7 +12,7 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "blink-ledger-systems-server-side-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],

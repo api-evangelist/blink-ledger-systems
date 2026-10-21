@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/blink-ledger-systems/main/json-schema/blink-ledger-systems-user-profile-response-schema.json",
+  "title": "UserProfileResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/blink-ledger-systems-users-api-openapi.yml#/components/schemas/UserProfileResponse",
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Blink user's email address."
+        }
+      }
+    }
+  }
+}

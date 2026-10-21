@@ -1,0 +1,63 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/blink-ledger-systems-authentication-api-openapi.yml
+- openapi/blink-ledger-systems-oauth-applications-api-openapi.yml
+- openapi/blink-ledger-systems-users-api-openapi.yml
+vocabulary:
+  name: Blink Ledger Systems Domain Vocabulary
+  description: 'Terms declared by Blink Ledger Systems''s own API contract: its resource groups, objects and enumerations, with the contract''s
+    definitions. Derived, not authored.'
+  version: '2026-10-20'
+  terms:
+  - term: Authentication
+    definition: Client account login and bearer token issuance.
+    tags:
+    - Resource Group
+    source: openapi/blink-ledger-systems-authentication-api-openapi.yml
+  - term: OAuth Applications
+    definition: Registration and retrieval of OAuth application credentials.
+    tags:
+    - Resource Group
+    source: openapi/blink-ledger-systems-oauth-applications-api-openapi.yml
+  - term: Users
+    definition: Blink user profile exchange.
+    tags:
+    - Resource Group
+    source: openapi/blink-ledger-systems-users-api-openapi.yml
+  - term: LoginToken
+    definition: 'Object declared by the contract with fields: key.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-authentication-api-openapi.yml#/components/schemas/LoginToken
+  - term: LoginRequest
+    definition: 'Object declared by the contract with fields: email, password.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-authentication-api-openapi.yml#/components/schemas/LoginRequest
+  - term: Error
+    definition: 'Object declared by the contract with fields: code, message.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-authentication-api-openapi.yml#/components/schemas/Error
+  - term: RegisterApplicationRequest
+    definition: 'Object declared by the contract with fields: name, redirectUris.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-oauth-applications-api-openapi.yml#/components/schemas/RegisterApplicationRequest
+  - term: OAuthApplicationConfig
+    definition: 'Object declared by the contract with fields: clientId, clientSecret, redirectUris.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-oauth-applications-api-openapi.yml#/components/schemas/OAuthApplicationConfig
+  - term: UserProfileResponse
+    definition: 'Object declared by the contract with fields: user.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-users-api-openapi.yml#/components/schemas/UserProfileResponse
+  - term: AccessTokenRequest
+    definition: 'Object declared by the contract with fields: client_id, client_secret, code, grant_type, redirect_uri.'
+    tags:
+    - Object
+    source: openapi/blink-ledger-systems-users-api-openapi.yml#/components/schemas/AccessTokenRequest

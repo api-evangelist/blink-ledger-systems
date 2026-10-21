@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/blink-ledger-systems/main/json-schema/blink-ledger-systems-access-token-request-schema.json",
+  "title": "AccessTokenRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/blink-ledger-systems-users-api-openapi.yml#/components/schemas/AccessTokenRequest",
+  "type": "object",
+  "required": [
+    "client_id",
+    "client_secret",
+    "code"
+  ],
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "OAuth client id."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "OAuth client secret."
+    },
+    "code": {
+      "type": "string",
+      "description": "Authorization code obtained client-side via blinkSDK.getAuthorizationCode()."
+    },
+    "grant_type": {
+      "type": "string",
+      "description": "Optional. Accepts only \"authorization_code\".",
+      "enum": [
+        "authorization_code"
+      ]
+    },
+    "redirect_uri": {
+      "type": "string",
+      "description": "Optional. One of your OAuth application's redirect URIs."
+    }
+  }
+}

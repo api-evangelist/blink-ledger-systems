@@ -64,6 +64,152 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Blink Ledger Systems is a company surfaced as a portfolio company of polychain and added to the API Evangelist network as a stub for enrichment. Sector: infrastructure. This profile is a lead awaiting the enrichment pipeline.
+Blink (Blink Ledger Systems Inc.) builds online identity and payment technologies for digital publishers. A single Blink account works across publishers, giving readers one universal login and frictionless payment so they can subscribe, donate, or buy an individual article or podcast with one click, or enable autopay for small frequent purchases. Publishers integrate three products — Blink Identity, Blink Pay and Blink Donate — through one hosted JavaScript SDK that places Blink-managed panels into the page, a dashboard-configured User Journeys rules engine, four server-side JSON endpoints for OAuth2 login, and a signed webhook notification stream covering subscription, payment and donation events. Founded 2017; incorporated in the US in 2018 and surfaced in the API Evangelist network as a Polychain portfolio company.
 
-Backed by: polychain — https://blink.net
+**Areas:** Company · Infrastructure · Payments · Identity · Authentication · Publishing · Media · Subscription · Donations · Micropayments · Paywall · Webhook
+
+## Blink Ledger Systems on APIs.io
+
+Everything profiled for Blink Ledger Systems is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/blink-ledger-systems/](https://apis.io/providers/blink-ledger-systems/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [Blink SDK for JavaScript](https://apis.io/apis/blink-ledger-systems/blink-ledger-systems-sdk/) — Browser SDK exposing window.blinkSDK. Provides Login with Blink (getAuthorizationCode), subscription entitlement checks (isSubscribed, getSubscription,…
+- [Blink Notifications (Webhooks)](https://apis.io/apis/blink-ledger-systems/blink-ledger-systems-notifications/) — Outbound webhook stream delivering signed JSON notifications for subscription, payment and donation lifecycle events. Every payload is signed with ed25519…
+- [Blink Ledger Systems Authentication API](https://apis.io/apis/blink-ledger-systems/blink-ledger-systems-authentication-api/) — Client account login and bearer token issuance.
+- [Blink Ledger Systems OAuth Applications API](https://apis.io/apis/blink-ledger-systems/blink-ledger-systems-oauth-applications-api/) — Registration and retrieval of OAuth application credentials.
+- [Blink Ledger Systems Users API](https://apis.io/apis/blink-ledger-systems/blink-ledger-systems-users-api/) — Blink user profile exchange.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Blink Ledger Systems Notifications Webhooks](https://apis.io/asyncapis/blink-ledger-systems/blink-ledger-systems-notifications-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [blink](https://apis.io/servers/blink-ledger-systems/blink/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Blink Ledger Systems Agentic Access](https://apis.io/agentic-access/blink-ledger-systems/blink-ledger-systems-agentic-access/)
+
+#### JSON Schema (6)
+
+The data models the API reads and writes.
+
+- [AccessTokenRequest](https://apis.io/schemas/blink-ledger-systems/blink-ledger-systems-access-token-request/)
+- [LoginRequest](https://apis.io/schemas/blink-ledger-systems/blink-ledger-systems-login-request/)
+- [LoginToken](https://apis.io/schemas/blink-ledger-systems/blink-ledger-systems-login-token/)
+- [OAuthApplicationConfig](https://apis.io/schemas/blink-ledger-systems/blink-ledger-systems-oauth-application-config/)
+- [RegisterApplicationRequest](https://apis.io/schemas/blink-ledger-systems/blink-ledger-systems-register-application-request/)
+- [UserProfileResponse](https://apis.io/schemas/blink-ledger-systems/blink-ledger-systems-user-profile-response/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Blink Ledger Systems Context](https://apis.io/jsonld/blink-ledger-systems/blink-ledger-systems-context/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Blink Server-Side Authentication API](https://apis.io/collections/blink-ledger-systems/open-blink-ledger-systems-authentication-api/)
+- [Blink Server-Side Authentication OAuth Applications API](https://apis.io/collections/blink-ledger-systems/open-blink-ledger-systems-oauth-applications-api/)
+- [Blink Server-Side Authentication Users API](https://apis.io/collections/blink-ledger-systems/open-blink-ledger-systems-users-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Blink Ledger Systems Server Side Api Overlay](https://apis.io/overlays/blink-ledger-systems/blink-ledger-systems-server-side-api-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Blink Ledger Systems API Rules](https://apis.io/rules/blink-ledger-systems/blink-ledger-systems-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Blink Ledger Systems Authentication](https://apis.io/security/blink-ledger-systems/blink-ledger-systems-authentication/)
+- [Blink Ledger Systems Domain Security](https://apis.io/security/blink-ledger-systems/blink-ledger-systems-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://blink.net)
+- [Documentation](https://docs.blink.net/docs/getting-started/overview.html)
+- [Getting started](https://docs.blink.net/docs/getting-started/quick-start.html)
+- [API reference](https://docs.blink.net/docs/api-reference/functions.html)
+- [Sign up](https://blink.net/login)
+- [Support](https://docs.blink.net/docs/getting-started/support.html)
+- [Blog](https://blink.net/blog/)
+- [Terms of service](https://blink.net/terms)
+- [Privacy policy](https://blink.net/privacy-policy)
+- [Status](https://status.blink.net)
+
+## API Evangelist rating
+
+**Kin Score 40.1** — developing · rubric 0.24.0 · scored 2026-10-20
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 34.7 |
+| Contract governance | 67.3 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 63.7 |
+| Access clarity | 0.0 |
+
+**Agent readiness 30.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | unknown |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 15.2** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/blink-ledger-systems/](https://apis.io/providers/blink-ledger-systems/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Blink Ledger Systems: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/blink-ledger-systems/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
